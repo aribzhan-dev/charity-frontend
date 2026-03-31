@@ -1,0 +1,52 @@
+.charity-card {
+  padding: 0 !important;
+  overflow: hidden;
+}
+
+.charity-img {
+  height: 180px;
+  background-size: cover;
+  background-position: center;
+}
+
+.charity-content {
+  padding: 1.25rem;
+}
+
+.charity-desc {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  margin: 0.75rem 0;
+}
+
+.progress-container {
+  margin: 1.5rem 0;
+}
+
+.progress-bar {
+  height: 8px;
+  background: #e5e7eb;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 0.5rem;
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--primary-color);
+  transition: width 0.3s ease;
+}
+
+.progress-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.charity-footer {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}

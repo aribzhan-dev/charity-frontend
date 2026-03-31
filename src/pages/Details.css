@@ -1,0 +1,109 @@
+.details-card {
+  padding: 0 !important;
+  max-width: 900px;
+  margin: 3rem auto;
+  overflow: hidden;
+}
+
+.details-img {
+  height: 400px;
+  background-size: cover;
+  background-position: center;
+}
+
+.details-body {
+  padding: 3rem;
+}
+
+.details-body h1 {
+  font-size: 2.5rem;
+  color: var(--primary-color);
+  margin-bottom: 1rem;
+}
+
+.details-meta {
+  display: flex;
+  gap: 2rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+  margin-bottom: 2rem;
+}
+
+.details-desc {
+  font-size: 1.125rem;
+  line-height: 1.8;
+  color: var(--text-secondary);
+  margin-bottom: 2.5rem;
+}
+
+.details-specs {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 2rem;
+  margin-bottom: 2.5rem;
+  padding: 1.5rem;
+  background: #f9fafb;
+  border-radius: var(--radius);
+}
+
+.spec label {
+  font-size: 0.875rem;
+  margin-bottom: 0.25rem;
+}
+
+.spec p {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.btn-lg {
+  padding: 1.25rem;
+  font-size: 1.125rem;
+}
+
+.progress-section {
+  margin-bottom: 2.5rem;
+}
+
+.progress-bar.lg {
+  height: 12px;
+}
+
+.progress-stats {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+}
+
+.amount {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--primary-color);
+}
+
+.donation-form {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background: #f0fdf4;
+  border: 1px solid #bdf2d0;
+  border-radius: var(--radius);
+}
+
+.donation-form .form-group {
+  margin-bottom: 1.5rem;
+}
+
+.donation-form label {
+  color: #166534;
+  font-weight: 600;
+}
+
+.donation-form input {
+  border-color: #bdf2d0;
+}
+
+.donation-form input:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+}

@@ -1,0 +1,113 @@
+.admin-header {
+  margin: 2rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.admin-tabs {
+  display: flex;
+  gap: 0.5rem;
+  background-color: #f3f4f6;
+  padding: 0.25rem;
+  border-radius: var(--radius);
+  width: fit-content;
+}
+
+.tab {
+  padding: 0.625rem 1.25rem;
+  background: transparent;
+  font-weight: 600;
+  color: var(--text-secondary);
+  border-radius: calc(var(--radius) - 4px);
+  border: none;
+  transition: all 0.2s ease;
+}
+
+.tab.active {
+  background-color: white;
+  color: var(--primary-color);
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+}
+
+.admin-section {
+  animation: fadeIn 0.4s ease-out;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.admin-form {
+  margin-bottom: 2rem;
+  border: 1px solid var(--primary-color);
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.admin-table {
+  overflow-x: auto;
+  border: 1px solid var(--border-color);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border-color);
+}
+
+th {
+  background-color: #f9fafb;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+}
+
+.type-badge, .status-badge {
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.type-badge.event { background: #dcfce7; color: #166534; }
+.type-badge.charity { background: #e0f2fe; color: #075985; }
+
+.status-badge.pending { background: #fef3c7; color: #92400e; }
+.status-badge.accepted { background: #dcfce7; color: #166534; }
+.status-badge.rejected { background: #fee2e2; color: #991b1b; }
+
+.actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.request-type {
+  margin-bottom: 3rem;
+}
+
+.btn-sm {
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}

@@ -1,0 +1,111 @@
+{
+  "nav": {
+    "home": "Басты бет",
+    "admin": "Админ панелі",
+    "login": "Кіру",
+    "register": "Тіркелу",
+    "dashboard": "Жеке кабинет",
+    "logout": "Шығу"
+  },
+  "form": {
+    "title": "Жаңа сұраныс",
+    "fullName": "Атауы",
+    "description": "Сипаттамасы",
+    "files": "Файлдарды жүктеу",
+    "submit": "Жіберу",
+    "sending": "Жіберілуде...",
+    "success": "Сәтті жіберілді!",
+    "error": "Қате кетті. Қайта көріңіз.",
+    "paymentLink": "Төлем сілтемесі"
+  },
+  "eventForm": {
+    "title": "Шараны құру",
+    "eventTitle": "Шара атауы",
+    "description": "Шара сипаттамасы",
+    "date": "Өткізілетін күні",
+    "location": "Өткізілетін орны",
+    "maxPeople": "Адам саны",
+    "transferDetails": "Көлік / Жеткізу",
+    "submit": "Сұранысты жіберу",
+    "sessionFull": "Бос орындар жоқ",
+    "joinedSuccess": "Сіз sәтті қосылдыңыз!",
+    "joinError": "Қосылу кезінде қате кетті",
+    "notFound": "Сұраныс табылмады",
+    "serverError": "Серверлік қате",
+    "userNotFound": "Пайдаланушы табылмады"
+  },
+  "admin": {
+    "title": "Басқару панелі",
+    "orgs": "Ұйымдар",
+    "moderation": "Модерация",
+    "users": "Пайдаланушылар",
+    "filters": "Сүзгілер",
+    "status": "Күйі",
+    "active": "Белсенді",
+    "inactive": "Белсенді емес",
+    "type": "Түрі",
+    "actions": "Әрекеттер",
+    "approve": "Мақұлдау",
+    "reject": "Қабылдамау",
+    "delete": "Жою",
+    "companies": "Ұйымдар",
+    "requests": "Сұраныстар",
+    "events": "Шаралар",
+    "charities": "Қайырымдылық",
+    "companyManagement": "Ұйымдарды басқару",
+    "registeredUsers": "Пайдаланушылар",
+    "newCompany": "Жаңа ұйым",
+    "cancel": "Болдырмау",
+    "companyName": "Ұйым атауы",
+    "email": "Email",
+    "password": "Құпия сөз",
+    "name": "Аты",
+    "joined": "Тіркелген күні",
+    "titleColumn": "Атауы",
+    "company": "Ұйым"
+  },
+  "login": {
+    "title": "Жүйеге кіру",
+    "email": "Email",
+    "password": "Құпия сөз",
+    "submit": "Кіру",
+    "noAccount": "Аккаунт жоқ па? Тіркеліңіз",
+    "user": "Пайдаланушы",
+    "company": "Компания",
+    "admin": "Админ",
+    "invalidCredentials": "Логин немесе құпия сөз қате"
+  },
+  "register": {
+    "title": "Тіркелу",
+    "name": "Аты-жөні",
+    "email": "Email",
+    "password": "Құпия сөз",
+    "submit": "Тіркелу",
+    "hasAccount": "Аккаунт бар ма? Кіріңіз",
+    "emailExists": "Email тіркеліп қойған",
+    "passwordShort": "Құпия сөз өте қысқа"
+  },
+  "dashboard": {
+    "welcome": "Қош келдіңіз,",
+    "createNew": "Жаңа сұраныс",
+    "myPosts": "Менің сұраныстарым",
+    "close": "Жабу",
+    "noRequests": "Сұраныстар табылмады. Алғашқы сұранысты жасаңыз!",
+    "status": {
+      "pending": "Күтуде",
+      "accepted": "Қабылданды",
+      "rejected": "Қабылданбады",
+      "completed": "Аяқталды"
+    }
+  },
+  "main": {
+    "events": "Шаралар",
+    "charity": "Қайырымдылық",
+    "join": "Қaтысу",
+    "donate": "Көмектесу",
+    "full": "Орын жоқ",
+    "raised": "Жиналды",
+    "goal": "Мақсат",
+    "subtitle": "Жаныңыздағы іс-шаралар мен қайырымдылық жобаларын табыңыз"
+  }
+}

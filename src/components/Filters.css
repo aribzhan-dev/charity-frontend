@@ -1,0 +1,14 @@
+.filters-card {
+  margin-bottom: 2rem;
+  padding: 1.5rem !important;
+}
+
+.filters-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+}
+
+.filter-group label {
+  font-size: 0.875rem;
+}

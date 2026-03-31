@@ -1,0 +1,46 @@
+.table-container {
+  overflow-x: auto;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  background: white;
+}
+
+.app-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.app-table th, .app-table td {
+  padding: 1rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.app-table th {
+  background: #f9fafb;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.app-table tr:last-child td {
+  border-bottom: none;
+}
+
+.actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.btn-sm {
+  padding: 0.4rem 0.75rem;
+  font-size: 0.8rem;
+}
+
+.no-data {
+  text-align: center;
+  padding: 3rem;
+  color: var(--text-secondary);
+  background: white;
+  border-radius: var(--radius);
+  border: 1px dashed var(--border-color);
+}
