@@ -1,17 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import Nav from '../components/Nav';
-import { 
-  getAllCompanies, 
-  createCompany, 
-  getAllUsers, 
-  getAllRequests, 
-  acceptEventRequest, 
-  rejectEventRequest, 
-  acceptCharityRequest, 
-  rejectCharityRequest 
+import {
+  getAllCompanies,
+  createCompany,
+  getAllUsers,
+  getAllRequests,
+  acceptEventRequest,
+  rejectEventRequest,
+  acceptCharityRequest,
+  rejectCharityRequest
 } from '../api';
 import { useLanguage } from '../hooks/useLanguage';
 import './AdminPage.css';
+
+const BASE_URL = import.meta.env.VITE_API_URL?.replace('/api', '') || 'http://localhost:3000';
 
 const AdminPage = () => {
   const { t } = useLanguage();
@@ -20,8 +22,9 @@ const AdminPage = () => {
   const [users, setUsers] = useState([]);
   const [requests, setRequests] = useState({ eventRequests: [], charityRequests: [] });
   const [loading, setLoading] = useState(false);
+  const [selectedRequest, setSelectedRequest] = useState(null);
+  const [modalType, setModalType] = useState(null);
 
-  // Company creation form state
   const [showForm, setShowForm] = useState(false);
   const [newCompany, setNewCompany] = useState({
     company_name: '',
@@ -58,12 +61,12 @@ const AdminPage = () => {
     e.preventDefault();
     try {
       await createCompany(newCompany);
-      alert('Company created successfully');
+      alert(t('admin.companyCreated'));
       setNewCompany({ company_name: '', email: '', password: '', type: 'event' });
       setShowForm(false);
       fetchData();
     } catch (err) {
-      alert(err.response?.data?.message || 'Error creating company');
+      alert(err.response?.data?.message || t('form.error'));
     }
   };
 
@@ -76,11 +79,24 @@ const AdminPage = () => {
         if (action === 'accept') await acceptCharityRequest(id);
         else await rejectCharityRequest(id);
       }
+      setSelectedRequest(null);
       fetchData();
     } catch (err) {
-      alert('Moderation failed');
+      alert(t('admin.moderationFailed'));
     }
   };
+
+  const openModal = (req, type) => {
+    setSelectedRequest(req);
+    setModalType(type);
+  };
+
+  const closeModal = () => {
+    setSelectedRequest(null);
+    setModalType(null);
+  };
+
+  const isImageFile = (path) => /\.(jpg|jpeg|png|gif|webp|svg)$/i.test(path);
 
   return (
     <div className="admin-page">
@@ -95,7 +111,9 @@ const AdminPage = () => {
           </div>
         </header>
 
-        {activeTab === 'companies' && (
+        {loading && <p className="loading">{t('main.loading')}</p>}
+
+        {activeTab === 'companies' && !loading && (
           <section className="admin-section">
             <div className="section-header">
               <h3>{t('admin.companyManagement')}</h3>
@@ -109,35 +127,35 @@ const AdminPage = () => {
                 <div className="form-grid">
                   <div className="form-group">
                     <label>{t('admin.companyName')}</label>
-                    <input 
-                      type="text" 
-                      value={newCompany.company_name} 
-                      onChange={(e) => setNewCompany({...newCompany, company_name: e.target.value})} 
-                      required 
+                    <input
+                      type="text"
+                      value={newCompany.company_name}
+                      onChange={(e) => setNewCompany({...newCompany, company_name: e.target.value})}
+                      required
                     />
                   </div>
                   <div className="form-group">
                     <label>{t('admin.email')}</label>
-                    <input 
-                      type="email" 
-                      value={newCompany.email} 
-                      onChange={(e) => setNewCompany({...newCompany, email: e.target.value})} 
-                      required 
+                    <input
+                      type="email"
+                      value={newCompany.email}
+                      onChange={(e) => setNewCompany({...newCompany, email: e.target.value})}
+                      required
                     />
                   </div>
                   <div className="form-group">
                     <label>{t('admin.password')}</label>
-                    <input 
-                      type="password" 
-                      value={newCompany.password} 
-                      onChange={(e) => setNewCompany({...newCompany, password: e.target.value})} 
-                      required 
+                    <input
+                      type="password"
+                      value={newCompany.password}
+                      onChange={(e) => setNewCompany({...newCompany, password: e.target.value})}
+                      required
                     />
                   </div>
                   <div className="form-group">
                     <label>{t('admin.type')}</label>
-                    <select 
-                      value={newCompany.type} 
+                    <select
+                      value={newCompany.type}
                       onChange={(e) => setNewCompany({...newCompany, type: e.target.value})}
                     >
                       <option value="event">{t('admin.events')}</option>
@@ -165,7 +183,7 @@ const AdminPage = () => {
                       <td>{c.company_name}</td>
                       <td>{c.email}</td>
                       <td><span className={`type-badge ${c.type}`}>{t(`admin.${c.type}s`)}</span></td>
-                      <td>{c.isActive ? t('admin.status.active') || 'Active' : t('admin.status.inactive') || 'Inactive'}</td>
+                      <td>{c.isActive ? t('admin.active') : t('admin.inactive')}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -174,7 +192,7 @@ const AdminPage = () => {
           </section>
         )}
 
-        {activeTab === 'users' && (
+        {activeTab === 'users' && !loading && (
           <section className="admin-section">
             <h3>{t('admin.registeredUsers')}</h3>
             <div className="admin-table card">
@@ -200,7 +218,7 @@ const AdminPage = () => {
           </section>
         )}
 
-        {activeTab === 'requests' && (
+        {activeTab === 'requests' && !loading && (
           <section className="admin-section">
             <div className="request-type">
               <h3>{t('admin.events')}</h3>
@@ -221,12 +239,15 @@ const AdminPage = () => {
                         <td>{r.company?.company_name}</td>
                         <td><span className={`status-badge ${r.status}`}>{t(`dashboard.status.${r.status}`)}</span></td>
                         <td>
-                          {r.status === 'pending' && (
-                            <div className="actions">
-                              <button className="btn btn-primary btn-sm" onClick={() => handleModerate(r._id, 'event', 'accept')}>{t('admin.approve')}</button>
-                              <button className="btn btn-outline btn-sm" onClick={() => handleModerate(r._id, 'event', 'reject')}>{t('admin.reject')}</button>
-                            </div>
-                          )}
+                          <div className="actions">
+                            <button className="btn btn-outline btn-sm" onClick={() => openModal(r, 'event')}>{t('admin.view')}</button>
+                            {r.status === 'pending' && (
+                              <>
+                                <button className="btn btn-primary btn-sm" onClick={() => handleModerate(r._id, 'event', 'accept')}>{t('admin.approve')}</button>
+                                <button className="btn btn-danger btn-sm" onClick={() => handleModerate(r._id, 'event', 'reject')}>{t('admin.reject')}</button>
+                              </>
+                            )}
+                          </div>
                         </td>
                       </tr>
                     ))}
@@ -254,12 +275,15 @@ const AdminPage = () => {
                         <td>{r.company?.company_name}</td>
                         <td><span className={`status-badge ${r.status}`}>{t(`dashboard.status.${r.status}`)}</span></td>
                         <td>
-                          {r.status === 'pending' && (
-                            <div className="actions">
-                              <button className="btn btn-primary btn-sm" onClick={() => handleModerate(r._id, 'charity', 'accept')}>{t('admin.approve')}</button>
-                              <button className="btn btn-outline btn-sm" onClick={() => handleModerate(r._id, 'charity', 'reject')}>{t('admin.reject')}</button>
-                            </div>
-                          )}
+                          <div className="actions">
+                            <button className="btn btn-outline btn-sm" onClick={() => openModal(r, 'charity')}>{t('admin.view')}</button>
+                            {r.status === 'pending' && (
+                              <>
+                                <button className="btn btn-primary btn-sm" onClick={() => handleModerate(r._id, 'charity', 'accept')}>{t('admin.approve')}</button>
+                                <button className="btn btn-danger btn-sm" onClick={() => handleModerate(r._id, 'charity', 'reject')}>{t('admin.reject')}</button>
+                              </>
+                            )}
+                          </div>
                         </td>
                       </tr>
                     ))}
@@ -270,6 +294,127 @@ const AdminPage = () => {
           </section>
         )}
       </main>
+
+      {/* Request Detail Modal */}
+      {selectedRequest && (
+        <div className="modal-overlay" onClick={closeModal}>
+          <div className="modal-card" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-header">
+              <h2>{selectedRequest.title}</h2>
+              <button className="modal-close" onClick={closeModal}>✕</button>
+            </div>
+            <div className="modal-body">
+              <div className="modal-info-grid">
+                <div className="modal-field">
+                  <span className="modal-label">{t('admin.company')}</span>
+                  <span>{selectedRequest.company?.company_name || '—'}</span>
+                </div>
+                <div className="modal-field">
+                  <span className="modal-label">{t('admin.status')}</span>
+                  <span className={`status-badge ${selectedRequest.status}`}>{t(`dashboard.status.${selectedRequest.status}`)}</span>
+                </div>
+                <div className="modal-field">
+                  <span className="modal-label">{t('admin.type')}</span>
+                  <span className={`type-badge ${modalType}`}>{t(`admin.${modalType}s`)}</span>
+                </div>
+                {selectedRequest.description && (
+                  <div className="modal-field full-width">
+                    <span className="modal-label">{t('form.description')}</span>
+                    <p className="modal-desc">{selectedRequest.description}</p>
+                  </div>
+                )}
+                {modalType === 'event' && (
+                  <>
+                    {selectedRequest.date && (
+                      <div className="modal-field">
+                        <span className="modal-label">{t('eventForm.date')}</span>
+                        <span>{new Date(selectedRequest.date).toLocaleDateString()}</span>
+                      </div>
+                    )}
+                    {selectedRequest.location && (
+                      <div className="modal-field">
+                        <span className="modal-label">{t('eventForm.location')}</span>
+                        <span>{selectedRequest.location}</span>
+                      </div>
+                    )}
+                    {selectedRequest.peopleNeeded && (
+                      <div className="modal-field">
+                        <span className="modal-label">{t('eventForm.maxPeople')}</span>
+                        <span>{selectedRequest.peopleNeeded}</span>
+                      </div>
+                    )}
+                    {selectedRequest.transferDetails && (
+                      <div className="modal-field full-width">
+                        <span className="modal-label">{t('eventForm.transferDetails')}</span>
+                        <span>{selectedRequest.transferDetails}</span>
+                      </div>
+                    )}
+                  </>
+                )}
+                {modalType === 'charity' && (
+                  <>
+                    {selectedRequest.targetAmount && (
+                      <div className="modal-field">
+                        <span className="modal-label">{t('main.goal')}</span>
+                        <span>{selectedRequest.targetAmount} ₸</span>
+                      </div>
+                    )}
+                    {selectedRequest.collectedAmount !== undefined && (
+                      <div className="modal-field">
+                        <span className="modal-label">{t('main.raised')}</span>
+                        <span>{selectedRequest.collectedAmount} ₸</span>
+                      </div>
+                    )}
+                    {selectedRequest.payment_link && (
+                      <div className="modal-field full-width">
+                        <span className="modal-label">{t('form.paymentLink')}</span>
+                        <a href={selectedRequest.payment_link} target="_blank" rel="noreferrer">{selectedRequest.payment_link}</a>
+                      </div>
+                    )}
+                  </>
+                )}
+              </div>
+
+              {/* Files Section */}
+              {selectedRequest.files && selectedRequest.files.length > 0 && (
+                <div className="modal-files">
+                  <h4>{t('form.files')}</h4>
+                  <div className="files-grid">
+                    {selectedRequest.files.map((file, idx) => {
+                      const filePath = file.path || file;
+                      const fileUrl = `${BASE_URL}/${filePath}`;
+                      return (
+                        <div key={idx} className="file-item">
+                          {isImageFile(filePath) ? (
+                            <a href={fileUrl} target="_blank" rel="noreferrer">
+                              <img src={fileUrl} alt={`file-${idx}`} className="file-preview-img" />
+                            </a>
+                          ) : (
+                            <a href={fileUrl} target="_blank" rel="noreferrer" className="file-download-link">
+                              📄 {filePath.split('/').pop()}
+                            </a>
+                          )}
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+
+              {selectedRequest.status === 'pending' && (
+                <div className="modal-actions">
+                  <button className="btn btn-primary" onClick={() => handleModerate(selectedRequest._id, modalType, 'accept')}>
+                    {t('admin.approve')}
+                  </button>
+                  <button className="btn btn-danger" onClick={() => handleModerate(selectedRequest._id, modalType, 'reject')}>
+                    {t('admin.reject')}
+                  </button>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

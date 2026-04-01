@@ -31,18 +31,17 @@ const CharityDetails = () => {
   const handleDonate = async (e) => {
     e.preventDefault();
     if (!donationAmount || donationAmount <= 0) {
-      alert('Please enter a valid amount');
+      alert(t('charity.invalidAmount'));
       return;
     }
 
     try {
       const res = await donateToCharity(id, Number(donationAmount));
       alert(res.data.message);
-      // Redirect to payment link
       window.open(res.data.payment_link, '_blank');
-      fetchCharity(); // Refresh data
+      fetchCharity();
     } catch (err) {
-      alert(err.response?.data?.message || 'Error processing donation');
+      alert(err.response?.data?.message || t('form.error'));
     }
   };
 

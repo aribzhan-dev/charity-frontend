@@ -59,7 +59,7 @@ const Dashboard = () => {
         <section className="my-posts">
           <h2>{t('dashboard.myPosts')}</h2>
           {loading ? (
-            <p>{t('form.sending')}</p>
+            <p>{t('main.loading')}</p>
           ) : (
             <div className="post-list">
               {requests.length === 0 ? (

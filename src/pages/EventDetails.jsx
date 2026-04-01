@@ -37,7 +37,7 @@ const EventDetails = () => {
     }
   };
 
-  if (loading) return <div className="loading">{t('form.sending')}</div>;
+  if (loading) return <div className="loading">{t('main.loading')}</div>;
   if (!event) return <div className="container"><h1>{t('eventForm.notFound')}</h1></div>;
 
   const joinedCount = event.attendees?.length || 0;

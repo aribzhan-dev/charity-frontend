@@ -36,8 +36,8 @@ const Home = () => {
   const handleJoin = async (id) => {
     try {
       await joinEvent(id);
-      alert('Joined successfully!');
-      fetchData(); // Refresh to show new attendee count
+      alert(t('eventForm.joinedSuccess'));
+      fetchData();
     } catch (err) {
       alert(err.response?.data?.message || t('form.error'));
     }
@@ -60,18 +60,18 @@ const Home = () => {
             <p>{t('main.subtitle') || 'Find events and charities near you'}</p>
           </div>
           <div className="filter-tabs">
-            <button className={`tab ${filter === 'all' ? 'active' : ''}`} onClick={() => setFilter('all')}>{t('admin.filters')}</button>
+            <button className={`tab ${filter === 'all' ? 'active' : ''}`} onClick={() => setFilter('all')}>{t('main.all')}</button>
             <button className={`tab ${filter === 'event' ? 'active' : ''}`} onClick={() => setFilter('event')}>{t('main.events')}</button>
             <button className={`tab ${filter === 'charity' ? 'active' : ''}`} onClick={() => setFilter('charity')}>{t('main.charity')}</button>
           </div>
         </section>
 
         {loading ? (
-          <p className="loading">Loading...</p>
+          <p className="loading">{t('main.loading')}</p>
         ) : (
           <div className="discovery-grid">
             {filteredPosts.length === 0 ? (
-              <p className="no-data">No items found.</p>
+              <p className="no-data">{t('main.noItems')}</p>
             ) : (
               filteredPosts.map(post => (
                 post.type === 'event' ? 

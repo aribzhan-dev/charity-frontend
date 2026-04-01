@@ -1,10 +1,9 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || 'https://charity-backend-ghaj.onrender.com/api',
+  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:3000/api',
 });
 
-// Interceptor to add token to requests
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem('token');
   if (token) {
@@ -13,9 +12,8 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
-// --- ADMIN ---
-export const adminLogin = async (credentials) => {
-  return api.post('/admin/login', credentials);
+export const login = async (credentials) => {
+  return api.post('/auth/login', credentials);
 };
 
 export const createCompany = async (data) => {
@@ -53,9 +51,6 @@ export const rejectCharityRequest = async (id) => {
 };
 
 
-export const companyLogin = async (credentials) => {
-  return api.post('/company/login', credentials);
-};
 
 export const submitEventRequest = async (data) => {
   const formData = new FormData();
@@ -96,14 +91,10 @@ export const getMyRequests = async (status = '') => {
   return api.get(url);
 };
 
-// --- USER ---
 export const userRegister = async (data) => {
   return api.post('/user/register', data);
 };
 
-export const userLogin = async (data) => {
-  return api.post('/user/login', data);
-};
 
 export const getUserProfile = async () => {
   return api.get('/user/profile');
