@@ -60,14 +60,12 @@ export const submitEventRequest = async (data) => {
   formData.append('location', data.location);
   formData.append('peopleNeeded', Number(data.peopleNeeded));
   formData.append('transferDetails', String(data.transferDetails));
-  
+
   if (data.files && data.files.length > 0) {
     Array.from(data.files).forEach((file) => formData.append('files', file));
   }
 
-  return api.post('/company/requests/event', formData, {
-    headers: { 'Content-Type': 'multipart/form-data' },
-  });
+  return api.post('/company/requests/event', formData); 
 };
 
 export const submitCharityRequest = async (data) => {
@@ -81,9 +79,7 @@ export const submitCharityRequest = async (data) => {
     Array.from(data.files).forEach((file) => formData.append('files', file));
   }
 
-  return api.post('/company/requests/charity', formData, {
-    headers: { 'Content-Type': 'multipart/form-data' },
-  });
+  return api.post('/company/requests/charity', formData); 
 };
 
 export const getMyRequests = async (status = '') => {
