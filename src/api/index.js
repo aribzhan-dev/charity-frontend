@@ -61,8 +61,14 @@ export const submitEventRequest = async (data) => {
   formData.append('peopleNeeded', Number(data.peopleNeeded));
   formData.append('transferDetails', String(data.transferDetails));
 
-  if (data.files && data.files.length > 0) {
-    Array.from(data.files).forEach((file) => formData.append('files', file));
+  if (data.files) {
+    const files = Array.isArray(data.files)
+      ? data.files
+      : data.files instanceof FileList
+      ? Array.from(data.files)
+      : [data.files];
+
+    files.forEach(file => formData.append('files', file));
   }
 
   return api.post('/company/requests/event', formData); 
@@ -75,8 +81,14 @@ export const submitCharityRequest = async (data) => {
   formData.append('targetAmount', Number(data.targetAmount));
   formData.append('payment_link', data.payment_link);
 
-  if (data.files && data.files.length > 0) {
-    Array.from(data.files).forEach((file) => formData.append('files', file));
+  if (data.files) {
+    const files = Array.isArray(data.files)
+      ? data.files
+      : data.files instanceof FileList
+      ? Array.from(data.files)
+      : [data.files];
+
+    files.forEach(file => formData.append('files', file));
   }
 
   return api.post('/company/requests/charity', formData); 

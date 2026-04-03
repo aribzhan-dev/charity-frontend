@@ -21,7 +21,10 @@ const CharityForm = ({ onSuccess }) => {
   };
 
   const handleFileChange = (e) => {
-    setFormData({ ...formData, files: e.target.files });
+    setFormData({
+      ...formData,
+      files: [...e.target.files]   
+    });
   };
 
   const handleSubmit = async (e) => {
@@ -100,7 +103,7 @@ const CharityForm = ({ onSuccess }) => {
           <input 
             type="file" 
             multiple 
-            onChange={handleFileChange} 
+            onChange={handleFileChange}
             accept="image/*,.pdf"
           />
         </div>
